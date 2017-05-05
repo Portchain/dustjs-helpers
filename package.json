@@ -1,0 +1,22 @@
+{
+  "name": "portchain-dustjs-helpers",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Portchain/dustjs-helpers.git"
+  },
+  "author": "",
+  "license": "SEE LICENSE IN LICENCE.md",
+  "bugs": {
+    "url": "https://github.com/Portchain/dustjs-helpers/issues"
+  },
+  "homepage": "https://github.com/Portchain/dustjs-helpers#readme",
+  "dependencies": {
+    "moment": "2.18.1"
+  }
+}
