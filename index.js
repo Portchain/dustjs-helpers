@@ -6,9 +6,8 @@ const logger = require('logacious')()
 const path = require('path')
 const fs = require('fs')
 
-let cssCleaner = new CleanCSS()
-let cssCache = {}
-let isProduction = process.env.NODE_ENV === 'production'
+const cssCleaner = new CleanCSS()
+const hiddenPixel = '<img class="nullsp" alt="" border="0" height="0" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="display:none; visibility: hidden; font-size: 0px; line-height: 0px" width="0"/>'
 
 module.exports = function(dust, conf) {
 
@@ -43,7 +42,6 @@ module.exports = function(dust, conf) {
   }
   
   if(conf && conf.stylesDirectory) {
-    
     dust.helpers.css = (chunk, context, bodies, params) => {
       let src = context.resolve(params.src, chunk, context)
       let output = loadCSS(src)
@@ -70,5 +68,12 @@ module.exports = function(dust, conf) {
     let value = context.resolve(params.value, chunk, context)
     let json = JSON.stringify(value, null, 2)
     return json
+  }
+  
+  dust.helpers.nonLinkedEmail = (chunk, context, bodies, params) => {
+    let splitEmail = context.resolve(params.email, chunk, context).split('@')
+    let splitDomain = splitEmail[1].split('.')
+    let output = splitEmail[0] + hiddenPixel + '@' + hiddenPixel + splitDomain.join(hiddenPixel + '.' + hiddenPixel)
+    return chunk.write(output)
   }
 }
