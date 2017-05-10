@@ -24,7 +24,6 @@ module.exports = function(dust, conf) {
         data: cssContent,
         includePaths: [conf.stylesDirectory]
       }).css.toString()
-      console.log('SCSS', cssContent)
     }
     cssContent = cssCleaner.minify(cssContent).styles
     return `<style>${cssContent}</style>`
@@ -46,7 +45,6 @@ module.exports = function(dust, conf) {
   if(conf && conf.stylesDirectory) {
     
     dust.helpers.css = (chunk, context, bodies, params) => {
-      console.log('DUST HELPER', params.src)
       let src = context.resolve(params.src, chunk, context)
       let output = loadCSS(src)
       return chunk.write(output)
@@ -63,7 +61,7 @@ module.exports = function(dust, conf) {
       }
       return chunk
     } catch(err) {
-      console.error(err)
+      logger.error(err)
       return err.message
     }
   }
