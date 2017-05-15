@@ -31,8 +31,22 @@ module.exports = function(dust, conf) {
   dust.helpers.formatDate = (chunk, context, bodies, params) => {
     let value = context.resolve(params.date, chunk, context)
     let format = context.resolve(params.format, chunk, context)
-    let output = moment(new Date(value)).format(format)
+    let defaultValue = context.resolve(params.default, chunk, context) || ''
+    let output = null
+    if(value) {
+      output = moment(new Date(value)).format(format)
+    } else {
+      output = defaultValue
+    }
     return chunk.write(output)
+  }
+
+  dust.helpers.dashIfEmpty = (value) => {
+    if(!value) {
+      return '-'
+    } else {
+      return value
+    }
   }
   
   dust.helpers.formatBoolean = (chunk, context, bodies, params) => {
@@ -48,7 +62,7 @@ module.exports = function(dust, conf) {
       return chunk.write(output)
     }
   } else {
-    logger.warn('portchain-dustjs-helpers: configuration is missing stylesDirectory field. Ignoring')
+    logger.warn('portchain-dustjs-helpers: configuration is missing stylesDirectory field. CSS helper is disabled.')
   }
 
   dust.helpers.iterate = (chunk, context, bodies) => {
