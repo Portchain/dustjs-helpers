@@ -90,4 +90,11 @@ module.exports = function(dust, conf) {
     let output = splitEmail[0] + hiddenPixel + '@' + hiddenPixel + splitDomain.join(hiddenPixel + '.' + hiddenPixel)
     return chunk.write(output)
   }
+
+  dust.helpers.embed = (chunk, context, bodies, params) => {
+    let src = context.resolve(params.src, chunk, context)
+    let srcPath = path.resolve(path.join(conf.publicDirectory, src))
+    let content = fs.readFileSync(srcPath, 'utf-8')
+    return chunk.write(content)
+  }
 }
