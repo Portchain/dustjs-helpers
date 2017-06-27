@@ -81,7 +81,7 @@ module.exports = function(dust, conf) {
   dust.helpers.json = (chunk, context, bodies, params) => {
     let value = context.resolve(params.value, chunk, context)
     let json = JSON.stringify(value, null, 2)
-    return json
+    return chunk.write(json)
   }
   
   dust.helpers.nonLinkedEmail = (chunk, context, bodies, params) => {
