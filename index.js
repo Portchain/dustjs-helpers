@@ -40,6 +40,30 @@ module.exports = function(dust, conf) {
     }
     return chunk.write(output)
   }
+  
+  dust.helpers.formatDelay = (chunk, context, bodies, params) => {
+    let value = parseInt(context.resolve(params.value, chunk, context), 10)
+    let output = ''
+    if(value) {
+      let duration = moment.duration(value, 'milliseconds')
+      let days = duration.days()
+      let hours = duration.hours()
+      let minutes = duration.minutes()
+      if(days) {
+        hours = days * 24
+      }
+      if(hours) {
+        output += hours + 'hrs'
+      }
+      if(minutes) {
+        if(hours) {
+          output += ' '
+        }
+        output += minutes + 'm'
+      }
+    }
+    return chunk.write(output)
+  }
 
   dust.helpers.dashIfEmpty = (value) => {
     if(!value) {
