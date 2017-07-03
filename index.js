@@ -34,7 +34,8 @@ module.exports = function(dust, conf) {
     let defaultValue = context.resolve(params.default, chunk, context) || ''
     let output = null
     if(value) {
-      output = moment.utc(new Date(value)).format(format)
+      value = value.replace(/[TZ]/g, ' ')
+      output = moment(value).format(format)
     } else {
       output = defaultValue
     }
