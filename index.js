@@ -49,14 +49,20 @@ module.exports = function(dust, conf) {
       let days = duration.days()
       let hours = duration.hours()
       let minutes = duration.minutes()
-      if(days) {
+
+      if(days >= 4) {
+        output += days + 'd'
+      } else if(days) {
         hours = days * 24
       }
       if(hours) {
+        if(days) {
+          output += ' '
+        }
         output += hours + 'hrs'
       }
       if(minutes) {
-        if(hours) {
+        if(days || hours) {
           output += ' '
         }
         output += minutes + 'm'
